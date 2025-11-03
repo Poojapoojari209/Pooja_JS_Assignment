@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Concepts Explorer</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 80%;
+  }
+
+  .card {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .completed {
+    border: 3px solid green;
+  }
+
+  .output {
+    margin-top: 30px;
+    background: #fff;
+    padding: 20px;
+    width: 80%;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+  }
+
+  code {
+    background: #f0f0f0;
+    padding: 5px;
+    display: block;
+    border-radius: 8px;
+  }
+</style>
+</head>
+<body>
+<h1>JavaScript Concepts Explorer</h1>
+<div class="cards">
+  <div class="card" data-topic="promise">Promise</div>
+  <div class="card" data-topic="eventloop">Event Loop</div>
+  <div class="card" data-topic="hof">Higher Order Function</div>
+  <div class="card" data-topic="callback">Callback Function</div>
+</div>
+
+<div id="output" class="output">Click a card to explore the concept </div>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const output = document.getElementById('output');
+
+// Load session progress
+const completedTopics = JSON.parse(sessionStorage.getItem('completedTopics')) || [];
+
+completedTopics.forEach(topic => {
+  const card = document.querySelector(`[data-topic="${topic}"]`);
+  if (card) card.classList.add('completed');
+});
+
+const topics = {
+  promise: {
+    title: "Promise Example",
+    code: `const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("Promise Resolved!"), 2000);
+});
+
+myPromise.then(result => console.log(result));`
+  },
+  eventloop: {
+    title: "Event Loop Example",
+    code: `console.log("Start");
+setTimeout(() => console.log("Timeout callback"), 0);
+console.log("End");
+// Output: Start, End, Timeout callback`
+  },
+  hof: {
+    title: "Higher Order Function Example",
+    code: `function greet(name) {
+  return "Hello, " + name;
+}
+
+function processUserInput(callback) {
+  const name = "Pooja";
+  console.log(callback(name));
+}
+
+processUserInput(greet);`
+  },
+  callback: {
+    title: "Callback Function Example",
+    code: `function fetchData(callback) {
+  setTimeout(() => {
+    console.log("Data fetched!");
+    callback();
+  }, 1000);
+}
+
+function displayData() {
+  console.log("Displaying data...");
+}
+
+fetchData(displayData);`
+  }
+};
+
+// Click event for cards
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    const topic = card.dataset.topic;
+    const { title, code } = topics[topic];
+
+    output.innerHTML = `<h2>${title}</h2><code>${code}</code>`;
+    
+    if (!completedTopics.includes(topic)) {
+      completedTopics.push(topic);
+      sessionStorage.setItem('completedTopics', JSON.stringify(completedTopics));
+      card.classList.add('completed');
+    }
+  });
+});
+</script>
+</body>
+</html>
