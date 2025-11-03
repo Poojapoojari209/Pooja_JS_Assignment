@@ -21,70 +21,117 @@
 
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
-    width: 80%;
+    width: 100%;
   }
 
   .card {
-    background: white;
-    padding: 20px;
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    perspective: 1000px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
   }
 
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  .completed {
-    border: 3px solid green;
-  }
-
-  .output {
-    margin-top: 30px;
-    background: #fff;
-    padding: 20px;
+  .card-inner {
+    position: relative;
     width: 80%;
+    height: 300px; /* smaller height */
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    border-radius: 12px;
+  }
+
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    white-space: pre-wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
   }
 
-  code {
-    background: #f0f0f0;
+  .card-front {
+    background: white;
+    font-size: 1em;
+    font-weight: 600;
+  }
+
+  .card-back {
+    background: #222;
+    color: #fff;
+    transform: rotateY(180deg);
+    overflow-y: auto;
+    text-align: left;
+  }
+
+  .card-back h3 {
+    font-size: 1em;
+    margin-bottom: 8px;
+    color: #9afca6;
+  }
+
+  .card-back code {
+    background: transparent;
     padding: 5px;
-    display: block;
     border-radius: 8px;
+    white-space: pre-wrap;
+    display: block;
+    color: #ffffff; /* white code text */
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+
+  .completed .card-front {
+    border: 3px solid green;
   }
 </style>
 </head>
 <body>
-<h1>JavaScript Concepts Explorer</h1>
+<h1>JavaScript Concepts</h1>
 <div class="cards">
-  <div class="card" data-topic="promise">Promise</div>
-  <div class="card" data-topic="eventloop">Event Loop</div>
-  <div class="card" data-topic="hof">Higher Order Function</div>
-  <div class="card" data-topic="callback">Callback Function</div>
-</div>
+  <div class="card" data-topic="promise">
+    <div class="card-inner">
+      <div class="card-front">Promise</div>
+      <div class="card-back"></div>
+    </div>
+  </div>
 
-<div id="output" class="output">Click a card to explore the concept </div>
+  <div class="card" data-topic="eventloop">
+    <div class="card-inner">
+      <div class="card-front">Event Loop</div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="hof">
+    <div class="card-inner">
+      <div class="card-front">Higher Order Function</div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="callback">
+    <div class="card-inner">
+      <div class="card-front">Callback Function</div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+</div>
 
 <script>
 const cards = document.querySelectorAll('.card');
-const output = document.getElementById('output');
 
 // Load session progress
 const completedTopics = JSON.parse(sessionStorage.getItem('completedTopics')) || [];
-
-completedTopics.forEach(topic => {
-  const card = document.querySelector(`[data-topic="${topic}"]`);
-  if (card) card.classList.add('completed');
-});
 
 const topics = {
   promise: {
@@ -132,13 +179,22 @@ fetchData(displayData);`
   }
 };
 
-// Click event for cards
+// Initialize cards
 cards.forEach(card => {
-  card.addEventListener('click', () => {
-    const topic = card.dataset.topic;
-    const { title, code } = topics[topic];
+  const topic = card.dataset.topic;
+  const back = card.querySelector('.card-back');
 
-    output.innerHTML = `<h2>${title}</h2><code>${code}</code>`;
+  if (topics[topic]) {
+    back.innerHTML = `<h3>${topics[topic].title}</h3><code>${topics[topic].code}</code>`;
+  }
+
+  // Restore completed state
+  if (completedTopics.includes(topic)) {
+    card.classList.add('completed');
+  }
+
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
     
     if (!completedTopics.includes(topic)) {
       completedTopics.push(topic);
