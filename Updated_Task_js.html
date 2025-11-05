@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Concepts Explorer</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .card {
+    perspective: 1000px;
+    cursor: pointer;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    border-radius: 12px;
+  }
+
+  /* Flip animation */
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  .card-front {
+    background: white;
+    color: #333;
+  }
+
+  /* Back side will look same as front (no blur effect) */
+  .card-back {
+    background: white;
+    color: #333;
+    transform: rotateY(180deg);
+  }
+
+  .example-container {
+    margin-top: 30px;
+    width: 90%;
+    background: #222;
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    display: none;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .example-container h3 {
+    font-size: 1em;
+    margin-bottom: 8px;
+    color: #9afca6;
+  }
+
+  .example-container code {
+    display: block;
+    white-space: pre-wrap;
+    font-family: monospace;
+    color: #fff;
+    font-size: 0.9em;
+  }
+
+  .completed .card-front {
+    border: 3px solid green;
+  }
+</style>
+</head>
+<body>
+<h1>JavaScript Concepts</h1>
+
+<div class="cards">
+  <div class="card" data-topic="Promise">
+    <div class="card-inner">
+      <div class="card-front"></div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="Eventloop">
+    <div class="card-inner">
+      <div class="card-front"></div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="Higher Order Function">
+    <div class="card-inner">
+      <div class="card-front"></div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="Callback">
+    <div class="card-inner">
+      <div class="card-front"></div>
+      <div class="card-back"></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="exampleContainer" class="example-container"></div>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const exampleContainer = document.getElementById('exampleContainer');
+const completedTopics = JSON.parse(sessionStorage.getItem('completedTopics')) || [];
+
+const topics = {
+  promise: {
+    title: "Promise Example",
+    code: `const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("Promise Resolved!"), 2000);
+});
+
+myPromise.then(result => console.log(result));`
+  },
+  eventloop: {
+    title: "Event Loop Example",
+    code: `console.log("Start");
+setTimeout(() => console.log("Timeout callback"), 0);
+console.log("End");
+// Output: Start, End, Timeout callback`
+  },
+  hof: {
+    title: "Higher Order Function Example",
+    code: `function greet(name) {
+  return "Hello, " + name;
+}
+
+function processUserInput(callback) {
+  const name = "Pooja";
+  console.log(callback(name));
+}
+
+processUserInput(greet);`
+  },
+  callback: {
+    title: "Callback Function Example",
+    code: `function fetchData(callback) {
+  setTimeout(() => {
+    console.log("Data fetched!");
+    callback();
+  }, 1000);
+}
+
+function displayData() {
+  console.log("Displaying data...");
+}
+
+fetchData(displayData);`
+  }
+};
+
+// Initialize cards
+cards.forEach(card => {
+  const topic = card.dataset.topic;
+  const cardFront = card.querySelector('.card-front');
+  const cardBack = card.querySelector('.card-back');
+
+  // Restore completed cards
+  if (completedTopics.includes(topic)) {
+    card.classList.add('completed');
+  }
+
+  card.addEventListener('click', () => {
+    // Remove flipped state from all other cards
+    cards.forEach(c => c.classList.remove('flipped'));
+    // Flip current card
+    card.classList.add('flipped');
+
+    // Set heading text on both sides (so no blur/gray when flipped)
+    const heading = topic.charAt(0).toUpperCase() + topic.slice(1);
+    cardFront.textContent = heading;
+    cardBack.textContent = heading;
+
+    // Display example below all cards
+    const topicData = topics[topic];
+    if (topicData) {
+      exampleContainer.innerHTML = `<h3>${topicData.title}</h3><code>${topicData.code}</code>`;
+      exampleContainer.style.display = "block";
+      window.scrollTo({ top: exampleContainer.offsetTop - 50, behavior: "smooth" });
+    }
+
+    // Mark as completed
+    if (!completedTopics.includes(topic)) {
+      completedTopics.push(topic);
+      sessionStorage.setItem('completedTopics', JSON.stringify(completedTopics));
+      card.classList.add('completed');
+    }
+  });
+});
+</script>
+</body>
+</html>
