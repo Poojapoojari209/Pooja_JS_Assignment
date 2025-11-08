@@ -31,8 +31,8 @@ console.log(multiply(5, 3));
 
 
 
-//immediate anonymous function
+//immediate invoke function expression
 (function() {
-  var message = "This is an immediate anonymous function!";
+  var message = "This is an immediate invoke function expression!";
   console.log(message);
 })();
