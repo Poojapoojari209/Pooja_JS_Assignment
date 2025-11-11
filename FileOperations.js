@@ -19,7 +19,7 @@
         });
     });
 
-    // --- Synchronous file writing (use with caution in production) ---
+    // --- Synchronous file writing ---
     try {
         fs.writeFileSync('sync_output.txt', 'This is synchronous content.');
         console.log('Synchronous content written to sync_output.txt.');
