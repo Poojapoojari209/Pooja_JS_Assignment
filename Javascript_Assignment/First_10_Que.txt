@@ -1,10 +1,18 @@
 1. What is JavaScript and how does it differ from Java?
-    JavaScript is a high-level, interpreted scripting language primarily known for enabling interactive and dynamic content on web pages. 
-    It is executed directly within web browsers (client-side) and can also be used for server-side development with platforms like Node.js.
+    
+Java:                                                                 
+    A compiled, object-oriented programming language designed for building robust, large-scale applications.
+    It requires a Java Virtual Machine (JVM) for execution.
+    Applications typically run on a JVM, allowing them to be platform-independent.
+    Statically typed, meaning variable types are declared and checked at compile time.
+    Java has a thread-based approach to concurrency.
 
-    Java is a class-based, object-oriented programming language designed for building robust, large-scale applications. 
-    It is a compiled language, meaning its code is translated into bytecode before execution on a Java Virtual Machine (JVM). 
-    Java is widely used for server-side applications, Android mobile development, enterprise systems, and more. 
+JavaScript:
+    An interpreted, dynamically-typed scripting language primarily for web browsers, enhancing interactivity.
+    It runs directly in the browser's JavaScript engine.
+    Executed within web browsers, though Node.js extends its use to server-side environments.
+    Dynamically typed, meaning variable types are determined at runtime.
+    Javascript has an event-based approach to concurrency.
 
 
 2.What are the primitive and non-primitive data types in JavaScript?
@@ -37,22 +45,19 @@
     example:
         const id = Symbol('uniqueId');
 
-    BigInt: Represents integer numbers of arbitrary length, exceeding the safe integer limit of Number.
-    example:
-        const largeNumber = 9007199254740991n; // The 'n' suffix denotes a BigInt
-
+   
     Non-Primitive (Reference) Data Types:
 
-    Non-primitive data types are used to store collections of data or more complex entities. Variables holding non-primitive values do not directly store the value; instead, they store a reference (memory address) to the location where the actual data is stored in memory.
+    Non-primitive data types hold multiple values or object. Variables holding non-primitive values do not directly store the value; instead, they store a reference (memory address) to the location where the actual data is stored in memory.
     
-    Object: The most fundamental non-primitive type, used to store collections of key-value pairs. Arrays and functions are special types of objects.
+    Object: The most fundamental non-primitive type, used to store collections of key-value pairs.
     example:
         let person = {
             firstName: "John",
             lastName: "Doe"
         };
 
-    Array: An ordered collection of values, indexed numerically. Arrays are a specific type of object.
+    Array: A special type of object collection of different element with different datatype which ordered collection.
     example:
         let colors = ["red", "green", "blue"];
 
@@ -106,7 +111,6 @@ Hoisting	                            Hoisted and initializedto undefined	    Hoi
     console.log(PI);
 
     const MY_OBJECT = { value: 1 };
-    // MY_OBJECT = { value: 2 }; // This would cause an error
     MY_OBJECT.value = 2; // You can still change the contents of the object
     console.log(MY_OBJECT.value); // Output: 2
     }
@@ -114,13 +118,15 @@ Hoisting	                            Hoisted and initializedto undefined	    Hoi
 
 
 
-What is hoisting?
-    Hoisting in JavaScript is a mechanism where variable and function declarations are conceptually moved to the top of their containing scope during the compile phase, before the code is executed. This means that you can use variables and call functions before they are formally declared in your code. 
+4. What is hoisting?
+    Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope Or
+    Hoisting in JavaScript is a mechanism where variable and function declarations are conceptually moved to the top of their containing scope during the compile phase, 
+    before the code is executed. This means that you can use variables and call functions before they are formally declared in your code. 
     Here's a breakdown of how hoisting works for different types of declarations:
     
     1. Variable Hoisting (with var)
-    Declarations are hoisted, initializations are not. When you declare a variable with var, only the declaration is hoisted to the top of its scope. The assignment or initialization of the value remains in its original position.
-    Default value of undefined. If you access a var variable before its initialization, it will have the value undefined. 
+    Variable declarations (var): The var keyword hoists the declaration to the top of its scope and initializes it with undefined. 
+    The actual assignment value is not hoisted, which can lead to unexpected results. 
     ex:
 
     console.log(myVar); // Output: undefined
@@ -128,8 +134,10 @@ What is hoisting?
     console.log(myVar); // Output: 10
     
     2. Variable Hoisting (with let and const)
-    Declarations are hoisted, but they are in a "Temporal Dead Zone" (TDZ). let and const declarations are also hoisted, but unlike var, they are not initialized with undefined. Attempting to access them before their actual declaration line will result in a ReferenceError.
-    Block-scoped. let and const are block-scoped, meaning their scope is limited to the block in which they are declared. 
+   Variable declarations (let and const): Variables declared with let and const are also hoisted, but they are not initialized. 
+   They are placed in a "temporal dead zone" (TDZ) until the line where they are declared is executed. 
+   Trying to access them before their declaration will result in a ReferenceError
+    
     ex:
     // console.log(myLet); // ReferenceError: Cannot access 'myLet' before initialization
     let myLet = 20;
@@ -148,10 +156,10 @@ What is hoisting?
     function greet() {
     console.log("Hello!");
     }
-    Function expressions are treated like variable hoisting. If you define a function as a function expression (assigning an anonymous function to a variable), the hoisting behavior follows that of the variable declaration (var, let, or const) used.
-    JavaScript
 
-    // sayHi(); // TypeError: sayHi is not a function (if using var) or ReferenceError (if using let/const)
+    4. Function expressions: Function expressions are not hoisted in the same way as function declarations. 
+    Only the variable declaration (if var is used) is hoisted and initialized to undefined.
+Example:
 
     var sayHi = function() {
     console.log("Hi!");
@@ -161,14 +169,15 @@ What is hoisting?
 
 
 5. What is the difference between == and ===?
-The main difference is that = is the assignment operator, which assigns a value to a variable, while == is the loose equality operator, which compares 
-two values for equality after converting them to a common type. In contrast, === is the strict equality operator, which checks for equality without any type conversion, 
-requiring both the value and the data type to be identical. 
+    The == operator is known as the loose equality operator. 
+    It compares two values for equality after performing type coercion, meaning it converts the values to the same type before comparing them.
+    The === operator is called the strict equality operator. 
+    It checks for equality without type conversion, meaning both the value and the type must be exactly the same for the comparison to return true.
 
 6. What are truthy and falsy values in JavaScript?
 
     Falsy Values:
-    Falsy values are those that are considered false when evaluated in a Boolean context. There are a specific, limited set of falsy values in JavaScript: 
+    
     false: The boolean primitive false.
     0: The number zero (including -0).
     0n: The BigInt zero.
@@ -176,14 +185,17 @@ requiring both the value and the data type to be identical.
     null: Represents the intentional absence of any object value.
     undefined: A variable that has not been assigned a value.
     NaN: "Not a Number," a result of an invalid or undefined mathematical operation.
+    
     Truthy Values:
-    Truthy values are all values that are not specifically defined as falsy. When evaluated in a Boolean context, they are considered true. This includes:
-    true: The boolean primitive true.
-    Any non-zero number (e.g., 1, -5, 3.14).
-    Any non-empty string (e.g., "hello", "false", "0").
-    Objects (e.g., {}, [], new Date()).
-    Arrays (even empty ones, []).
-    Functions.
+    
+    true (the boolean primitive)
+    Any non-zero number (e.g., 1, -42, 3.14, Infinity)
+    Any non-empty string (e.g., "hello", "false", "0")
+    Empty objects {}
+    Empty arrays []
+    Functions
+    Dates
+    Symbols
 
     Example:
 
@@ -208,69 +220,60 @@ requiring both the value and the data type to be identical.
 
 7. What is the use of the typeof operator?
 
-The typeof operator is used to determine the data type of a variable or expression. It returns a string indicating the type of its operand. This is particularly useful in dynamically typed languages like JavaScript, where variable types are not explicitly declared and can change during runtime. 
+The typeof operator is used to determine the data type of a variable or expression. 
 Primary uses of the typeof operator:
 
-Type Checking: It allows developers to check the data type of a variable or value before performing operations that are specific to that type. This helps prevent errors and ensures code robustness.
+Type Checking: It allows developers to check the data type of a variable or value before performing operations that are specific to that type. 
+This helps prevent errors and ensures code robustness.
 ex:
 
     let myVariable = "Hello";
     if (typeof myVariable === "string") {
         console.log("It's a string!");
     }
-Debugging: When debugging, typeof can be used to quickly inspect the type of a variable at a particular point in the code, helping to identify unexpected type assignments or conversions.
-Conditional Logic: It enables the creation of conditional logic that executes different code paths based on the type of data being processed.
-ex:
 
-    function processData(data) {
-        if (typeof data === "number") {
-            return data * 2;
-        } else if (typeof data === "string") {
-            return data.toUpperCase();
-        } else {
-            return "Unsupported type";
-        }
-    }
-Handling Undefined Variables: It can safely check if a variable is declared and defined, preventing ReferenceError when attempting to access a potentially non-existent variable.
-ex:
 
-    if (typeof nonExistentVar === "undefined") {
-        console.log("nonExistentVar is not defined.");
-    }
 
 
 8. What is NaN and how can you check for it?
 
-    NaN, which stands for "Not a Number," is a special floating-point value that represents an undefined or unrepresentable numeric result, 
-    like the square root of a negative number or \(0/0\). The most reliable way to check for NaN is to use specific functions, as NaN is the only value that is not equal 
-    to itself, though methods like isNaN() or Number.isNaN() (in JavaScript) are commonly used for this purpose. 
+    NaN stands for Not a Number.
+    In JavaScript, NaN is a special value that represents an invalid number.
+    It appears when a calculation cannot produce a valid numeric result.
 
-    What is NaN? 
-    Undefined Result: NaN typically arises from mathematical operations that don't produce a real number, such as taking the square root of a negative
-    number or dividing zero by zero.Missing Data: It can also be used to represent missing or undefined values in computations and data analysis.
-    Floating-Point Standard: The use of NaN was standardized by the IEEE 754 floating-point standard. How to check for NaN Because of its unique properties,
-    you cannot check for NaN with a simple equality test (== or ===). Instead, you must use specific functions provided by your programming language.
-     
-    JavaScript:
-    Use Number.isNaN() for a reliable check, which returns true only if the value is NaN.
-    Use the global isNaN(), but be aware it will return true for any value that cannot be converted to a number (not just NaN).
+    ex: 
 
+    console.log(0 / 0);            // NaN
+    console.log("hello" - 5);      // NaN
+    console.log(parseInt("abc"));  // NaN
+    console.log(Math.sqrt(-1));    // NaN
+
+    console.log(typeof NaN);   // "number"
 
  9. What is the difference between undefined and null?
 
-    The difference between undefined and null lies in their origin and intended meaning, particularly in JavaScript:
-    undefined: This indicates that a variable has been declared but has not yet been assigned a value. It is implicitly assigned by JavaScript in several scenarios:
-    When a variable is declared without initialization: let x;
-
-    When accessing an object property that does not exist: console.log(obj.nonExistentProperty);
-    When a function does not explicitly return a value: function foo() {}
-    For function parameters that are not provided: function bar(a, b) { console.log(b); } bar(1);
     
+    undefined: This indicates that a variable has been declared but has not yet been assigned a value. 
+
+    it is declared but not assigned.
+    A function does not return anything.
+    You try to access a missing property.
+
+    ex: let a;
+    console.log(a);       // undefined
+
+    function test() {}
+    console.log(test());  // undefined
+
+    let obj = {};
+    console.log(obj.x);   // undefined
+
+
     null: This represents the intentional absence of any object value. It is explicitly assigned by a developer to indicate that a variable or property currently 
     holds no value.
 
-    let myVariable = null;
-    document.getElementById('someElement').onclick = null;
+    let user = null; // user is intentionally empty
+    user = { name: "sanvi" }; // now user has data
 
 10. What is type coercion in JavaScript?
 
@@ -278,18 +281,28 @@ ex:
     This happens when JavaScript encounters an operation involving values of different types and needs to convert one or both of them to a compatible type to
     perform the operation. 
     
-    How it works:
-    JavaScript is a loosely typed language, meaning variables are not explicitly declared with a specific data type. This flexibility allows for type coercion to occur naturally in many scenarios:
-    Arithmetic operations: When you perform an operation like number + string, JavaScript will often coerce the number into a string to concatenate them. 
-    
-    For example, 5 + "hello" results in "5hello".
-    Comparison operations: When using the loose equality operator (==), JavaScript attempts to convert operands to a common type before comparing their values. For example, 5 == "5" evaluates to true because the string "5" is coerced to the number 5.
-    Logical operations: In contexts where a boolean value is expected (e.g., if statements, logical operators like && or ||), non-boolean values are coerced to booleans. For example, if ("hello") will evaluate to true because a non-empty string is truthy.
-    
     Types of Coercion:
     
     Implicit Coercion: This is the automatic conversion performed by JavaScript without explicit instructions from the developer. The examples above 
     illustrate implicit coercion.
 
-    Explicit Coercion (Type Casting): This involves deliberately converting a value from one type to another using built-in functions or constructors like Number(), 
-    String(), or Boolean(). For example, Number("10") converts the string "10" to the number 10.
+    // Number to String
+    let result1 = 5 + "hello"; // "5hello" (number 5 is converted to string "5")
+
+    // String to Number
+    let result2 = "10" - 2; // 8 (string "10" is converted to number 10)
+    let result3 = "10" * "2"; // 20 (both strings are converted to numbers)
+
+
+    Explicit Coercion (Type Casting): TExplicit type conversion in JavaScript, also known as type casting, involves manually converting a value from one data type to another using built-in functions or methods.
+     For example, Number("10") converts the string "10" to the number 10.
+
+     // To Number
+    let stringNum = "123";
+    let num1 = Number(stringNum); // 123 (converts string to number)
+    let num2 = parseInt("45.6"); // 45 (parses integer part of string)
+    let num3 = parseFloat("45.6"); // 45.6 (parses float part of string)
+   
+    // To String
+    let numberVal = 123; 
+    let str1 = String(numberVal); // "123" (converts number to string)

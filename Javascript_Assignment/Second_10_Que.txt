@@ -5,9 +5,6 @@
     Any variable or function declared outside of all functions or blocks is placed in the global scope.
     Such variables become accessible from anywhere in the program, including inside functions and blocks.
 
-    Global variables live for the entire life of the program and are stored on the global object (window in browser, global in Node.js).
-    Overusing global scope can lead to naming conflicts and debugging issues.
-
     ex: 
 
     var x = 10; // global variable
@@ -23,9 +20,6 @@
     Function Scope:
     Function scope means that variables declared inside a function (using var, let, or const) can be accessed only within that function.
     They are not accessible outside the function, regardless of where the function is invoked.
-
-    Function scope allows logical grouping of code and prevents variable conflicts by confining variables within functional boundaries.
-
     ex: 
 
     function test() {
@@ -33,16 +27,13 @@
     console.log(a); 
     }
 
-    test();       // 20
+    test();  // 20
     console.log(a);
-
 
     Block scope:
     Block scope applies to variables declared inside {} such as loops, if statements, and switch blocks.
     Only let and const create block-scoped variables; var does not.
     Block-scoped variables exist only within the block in which they are defined.
-
-    Block scope enables finer control of a variable's lifetime and helps avoid accidental reassignments.
 
     ex:
 
@@ -129,19 +120,23 @@
 4. What is lexical scope? 
 
     Lexical scope means a function's scope is determined by where it is written in the code, not where it is called.
+    or
+    JavaScript looks at where the function is written, and based on that placement, it decides which variables are accessible inside that function.
 
     Inner functions can access outer function variables.
 
-    Inner functions can access variables from their:
+    Lexical scope is a powerful concept that can help to make your code more readable and maintainable. 
+    By understanding lexical scope, you can avoid the problems that can be caused by global variables and other forms of uncontrolled scope.
 
-    Own scope
+    Benefits of Lexical Scope
 
-    Parent function’s scope
+    Increased readability: Lexical scope makes your code more readable by making it clear where variables are defined and what their scope is. 
+    This can help to prevent errors and make your code easier to understand.
+    
+    Improved maintainability: Lexical scope makes your code more maintainable by making it easier to change variables without affecting other parts of your code. 
 
-    Global scope
-
-    Lexical scope does NOT depend on where a function is invoked, only where it is defined.
-
+    Declaring variables outside of functions: Variables should always be declared inside of functions, not outside of functions. 
+    
     ex: function outer() {
     let msg = "Hello";
 
@@ -156,7 +151,8 @@
 
 
 5.How do closures work in JavaScript? 
-    A closure in JavaScript is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment).
+    In JavaScript, closure provides access to the outer scope of a function from inside the inner function, even after the outer function has closed.
+    or
     In simpler terms, a closure allows an inner function to access the variables and parameters of its outer function,
     even after the outer function has finished executing. This occurs because the inner function "remembers" the environment in which it was created
 
@@ -258,6 +254,15 @@
     It is created by wrapping a function expression in parentheses () and is immediately executed by adding another set of parentheses () at the end. 
     This pattern creates a private scope for variables, preventing them from polluting the global scope, which helps in avoiding naming conflicts and organizing code. 
 
+    How it works
+    Function expression: The function is wrapped in parentheses () to be treated as an expression, not a declaration. For example: (function() { ... }).
+    Immediate invocation: A second set of parentheses () is added to the end to execute the function immediately after it's created. 
+
+    Why use an IIFE?
+    Avoids global scope pollution: Variables declared with var inside an IIFE stay local to the function, preventing them from becoming global variables. Using let or const is recommended for this purpose.
+    Creates a private scope: It's a way to encapsulate code and its variables without leaving any trace in the global scope.
+    Prevents naming conflicts: By creating its own scope, an IIFE ensures that variables inside it don't clash with variables outside of it. 
+
     ex:
 
     var counter = (function() {
@@ -283,24 +288,41 @@
 
 9. What is a pure function? 
 
-    A pure function is a function that adheres to two main principles: 
-    
-    Deterministic Output: Given the same input arguments, a pure function will always produce the same output. 
-    It does not rely on any external state or mutable data that could change its behavior over time.
-    
-    No Side Effects: A pure function does not cause any observable side effects outside its own scope. 
-    This means it does not modify global variables, mutate its input arguments, perform I/O operations (like printing to the console or writing to a file), or interact with external systems.
+    A pure function in JavaScript is a function that always gives the same output for the same input and does not cause any side effects.
 
-    ex:
+    Definition of a Pure Function
+
+    A function is considered pure if it satisfies both conditions:
+
+    1. Same input → Same output (Deterministic)
+
+    No matter how many times you call the function with the same arguments, the result must always be the same.
+
+    2. No side effects
+
+    The function should not modify:
+
+    Global variables
+
+    Function parameters
+
+    DOM elements
+
+    Files / Databases
+
+    API Calls
+
+    Console logs (ideally avoided)
+
+    It should only depend on its input and return a value.
+
+    Pure Function Example 
     function add(a, b) {
     return a + b;
     }
 
-    This add function is a pure function because:
-    Deterministic Output: If you call add(2, 3), it will always return 5. The output is solely determined by its input arguments.
-    No Side Effects: It does not modify any variables outside its scope, nor does it perform any other actions that would change the state of the program.
-     It simply returns a new value based on its inputs.
-
+    console.log(add(2, 3)); // 5
+    console.log(add(2, 3)); // 5 (same input → same output)
 
 10. What is a higher-order function?
 
