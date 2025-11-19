@@ -705,7 +705,7 @@ Example:
     console.log(add(5, 3)); // Output: 8
 
   A function expression defines a function and assigns it to a variable. It can be anonymous (without a name) or named.
-   Unlike declarations, function expressions are not hoisted, so they cannot be used before their definition.
+   Unlike declarations, function expressions are not hoisted.
 
 Example:
 
@@ -717,7 +717,7 @@ console.log(multiply(4, 2)); // Output: 8
 
 30. What is a generator function?
 
-  A generator function in JavaScript is a special type of function that can pause its execution using the yield keyword and resume later. It returns an iterator object that allows you to control the flow of execution.
+  A generator function in JavaScript is a special type of function that can pause its execution using the yield keyword and resume later. It allows you to control the flow of execution.
 
  Syntax
 
