@@ -1,24 +1,21 @@
 1. What is JavaScript and how does it differ from Java?
     
 Java:                                                                 
-    A compiled, object-oriented programming language designed for building robust, large-scale applications.
+    A compiled, object-oriented programming language.
     It requires a Java Virtual Machine (JVM) for execution.
-    Applications typically run on a JVM, allowing them to be platform-independent.
     Statically typed, meaning variable types are declared and checked at compile time.
-    Java has a thread-based approach to concurrency.
+    Java has a thread-based approach.
 
 JavaScript:
     An interpreted, dynamically-typed scripting language primarily for web browsers, enhancing interactivity.
     It runs directly in the browser's JavaScript engine.
-    Executed within web browsers, though Node.js extends its use to server-side environments.
     Dynamically typed, meaning variable types are determined at runtime.
-    Javascript has an event-based approach to concurrency.
+    Javascript has an event-based approach.
 
 
 2.What are the primitive and non-primitive data types in JavaScript?
 
-    Primitive data types represent single, immutable values. When you assign a primitive value to a variable, the variable directly holds that value.
-    
+    Primitive data types represent single value.
     String: Represents textual data.
     example:
         let name = "Alice";
@@ -28,7 +25,7 @@ JavaScript:
         let age = 30;
         let price = 19.99;
 
-    Boolean: Represents a logical entity and can only have two values: true or false.
+    Boolean: Represents true or false.
     example:
         let isActive = true;
 
@@ -36,19 +33,18 @@ JavaScript:
     example:
         let unassignedVariable; // Value is undefined
 
-    Null: Represents the intentional absence of any object value. It is a primitive value.
+    Null: Represents the intentional absence of any object value.
     example:
          let emptyValue = null;
     
-    Symbol: Represents a unique and immutable identifier, often used to create unique property keys for objects.
+    Symbol: Represents a unique identifier.
     example:
         const id = Symbol('uniqueId');
 
    
     Non-Primitive (Reference) Data Types:
 
-    Non-primitive data types hold multiple values or object. Variables holding non-primitive values do not directly store the value; instead, they store a reference (memory address) to the location where the actual data is stored in memory.
-    
+    Non-primitive data types hold multiple values or object.
     Object: The most fundamental non-primitive type, used to store collections of key-value pairs.
     example:
         let person = {
@@ -115,12 +111,10 @@ Hoisting	                            Hoisted and initializedto undefined	    Hoi
     }
     constExample();
 
-
-
 4. What is hoisting?
     Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope.
     
-    1. Variable Declarations (with var): Only the declaration of var variables is hoisted, not their assignment.
+    1. Variable Declarations (with var): Only the declaration of var variables is hoisted, but they are not initialized.
      When accessed before assignment, they will have a value of undefined
     ex:
 
@@ -133,7 +127,6 @@ Hoisting	                            Hoisted and initializedto undefined	    Hoi
    They are placed in a "temporal dead zone" (TDZ) until the line where they are declared is executed. 
    Trying to access them before their declaration will result in a ReferenceError
 
-    
     ex:
     // console.log(myLet); // ReferenceError: Cannot access 'myLet' before initialization
     let myLet = 20;
@@ -167,7 +160,7 @@ Example:
 
 5. What is the difference between == and ===?
     The == operator is known as the loose equality operator. 
-    It compares two values for equality after performing type coercion, meaning it converts the values to the same type before comparing them.
+    It compares two values for equality, it converts the values to the same type before comparing them.
     ex:
     console.log('5' == 5); // true (string '5' is converted to number 5)
     console.log(true == 1); // true (boolean true is converted to number 1)
@@ -227,8 +220,7 @@ Example:
 8. What is NaN and how can you check for it?
 
     NaN stands for Not a Number.In JavaScript, NaN is a special value that represents an invalid number.
-    It appears when a calculation cannot produce a valid numeric result.
-
+    
     ex: 
     console.log(0 / 0);            // NaN
     console.log("hello" - 5);      // NaN
@@ -360,9 +352,7 @@ Example:
 
 14. What is lexical scope? 
     Lexical scope means a function's scope is determined by where it is written in the code, not where it is called.
-    or
-    Lexical scope defines the accessibility of variables and functions depending on their location in the source code. 
-    
+   
     Variables and functions have different levels of scope:
     Global Scope: Variables defined outside any function or block, accessible anywhere in the program.
     Local Scope: Variables defined inside a function or block, accessible only within that specific function or block.
