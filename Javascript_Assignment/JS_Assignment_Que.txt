@@ -2,21 +2,22 @@
     
 Java:                                                                 
     A compiled, object-oriented programming language.
-    It requires a Java Virtual Machine (JVM) for execution.
-    Statically typed, meaning variable types are declared and checked at compile time.
+    Java runs on the Java Virtual Machine (JVM)
+    Java is statically typed, meaning variable types are checked at compile-time.
+     Java requires a Java Development Kit (JDK) to run,
     Java has a thread-based approach.
 
 JavaScript:
-    An interpreted, dynamically-typed scripting language primarily for web browsers, enhancing interactivity.
-    It runs directly in the browser's JavaScript engine.
-    Dynamically typed, meaning variable types are determined at runtime.
+    An interpreted, dynamically-typed scripting language.
+    JavaScript runs in browsers or server environments like Node.js.
+    JavaScript is dynamically typed, with types determined at runtime.
+    JavaScript only needs a browser or text editor.
     Javascript has an event-based approach.
-
 
 2.What are the primitive and non-primitive data types in JavaScript?
 
-    Primitive data types represent single value.
-    String: Represents textual data.
+    Primitive data types represent single value,they immutable means their value cannot changed after created.
+    String: Represents sequence of character enclosed in single quotes, double quotes and backtick.
     example:
         let name = "Alice";
         
@@ -44,7 +45,7 @@ JavaScript:
    
     Non-Primitive (Reference) Data Types:
 
-    Non-primitive data types hold multiple values or object.
+    Non-primitive data types hold multiple values or object, they are mutable means content can be modified after creation.
     Object: The most fundamental non-primitive type, used to store collections of key-value pairs.
     example:
         let person = {
@@ -61,7 +62,6 @@ JavaScript:
         function greet(name) {
             return "Hello, " + name;
         }
-
 
 
 3. What is the difference between var, let, and const? 
@@ -142,7 +142,6 @@ Hoisting	                            Hoisted and initializedto undefined	    Hoi
     ex:
 
     greet(); // Output: Hello!
-
     function greet() {
     console.log("Hello!");
     }
@@ -177,7 +176,6 @@ Example:
     Falsy Values:
         false: The boolean primitive false.
         0: The number zero (including -0).
-        0n: The BigInt zero.
         "": An empty string.
         null: Represents the intentional absence of any object value.
         undefined: A variable that has not been assigned a value.
@@ -220,7 +218,6 @@ Example:
 8. What is NaN and how can you check for it?
 
     NaN stands for Not a Number.In JavaScript, NaN is a special value that represents an invalid number.
-    
     ex: 
     console.log(0 / 0);            // NaN
     console.log("hello" - 5);      // NaN
@@ -378,7 +375,6 @@ Example:
    This allows the inner function to retain access to these variables even after the outer function has finished executing. 
     whenever a function is created inside another function inner function forms a closure with its parent variable.
     
-    
     ex: 
     function createCounter() {
     let count = 0; // 'count' is a variable in the outer function's scope
@@ -395,14 +391,13 @@ Example:
     counter2(); // Output: 1 (starts a new count for counter2)
     counter1(); // Output: 3 (counter1 continues its own count)
 
-
     Workflow of a Closure:
     Lexical scoping: scope of the variable determined by where it is defined in the code, not where it is called.
-    Function Defination: when an inner function defined within an outer function it forms a cllosure over the outer function variable.
+    Function Defination: when an inner function defined within an outer function it forms a closure over the outer function variable.
     Outer function execution: when outer function executes and return the inner function inner function carries with its reference to the 
                              outer function scope including its variable.
     Inner Function Execution: when outer function has completed and its execution context is removed from the callstack.
-                             inner function access and manipulae the variable from original lexical environment.
+                             inner function access and manipulate the variable from original lexical environment.
 
 
 16. What is the difference between var, let, and const in terms of hoisting? 
@@ -444,7 +439,8 @@ Example:
 
 18. What are immediately invoked function expressions (IIFEs)? 
 
-    An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs immediately after being defined. It is commonly used to create a private scope and avoid polluting the global namespace.
+    An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs immediately after being defined. 
+    It is commonly used to create a private scope and avoid polluting the global namespace.
 
     Example: 
     (function () {
