@@ -196,3 +196,237 @@ mysql> select * from city where CountryCode = "IND" limit 4;
 | 1027 | Chennai (Madras)   | IND         | Tamil Nadu   |    3841396 |
 +------+--------------------+-------------+--------------+------------+
 4 rows in set (0.00 sec)
+
+mysql> use world
+Database changed
+mysql> select * from city where District="Karnataka" and Population > 250000
+    -> ;
++------+---------------+-------------+-----------+------------+
+| ID   | Name          | CountryCode | District  | Population |
++------+---------------+-------------+-----------+------------+
+| 1030 | Bangalore     | IND         | Karnataka |    2660088 |
+| 1060 | Hubli-Dharwad | IND         | Karnataka |     648298 |
+| 1074 | Mysore        | IND         | Karnataka |     480692 |
+| 1102 | Belgaum       | IND         | Karnataka |     326399 |
+| 1108 | Gulbarga      | IND         | Karnataka |     304099 |
+| 1116 | Mangalore     | IND         | Karnataka |     273304 |
+| 1119 | Davangere     | IND         | Karnataka |     266082 |
++------+---------------+-------------+-----------+------------+
+7 rows in set (0.66 sec)
+
+mysql> select * from city where IN('Karnataka', 'Madhya Pradesh', 'Goa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IN('Karnataka', 'Madhya Pradesh', 'Goa')' at line 1
+
+mysql> select * from city where DISTRICT IN('Karnataka', 'Madhya Pradesh', 'Goa');
++------+-----------------+-------------+----------------+------------+
+| ID   | Name            | CountryCode | District       | Population |
++------+-----------------+-------------+----------------+------------+
+| 1030 | Bangalore       | IND         | Karnataka      |    2660088 |
+| 1037 | Indore          | IND         | Madhya Pradesh |    1091674 |
+| 1038 | Bhopal          | IND         | Madhya Pradesh |    1062771 |
+| 1053 | Jabalpur        | IND         | Madhya Pradesh |     741927 |
+| 1057 | Gwalior         | IND         | Madhya Pradesh |     690765 |
+| 1060 | Hubli-Dharwad   | IND         | Karnataka      |     648298 |
+| 1074 | Mysore          | IND         | Karnataka      |     480692 |
+| 1097 | Ujjain          | IND         | Madhya Pradesh |     362266 |
+| 1102 | Belgaum         | IND         | Karnataka      |     326399 |
+| 1108 | Gulbarga        | IND         | Karnataka      |     304099 |
+| 1116 | Mangalore       | IND         | Karnataka      |     273304 |
+| 1119 | Davangere       | IND         | Karnataka      |     266082 |
+| 1122 | Bellary         | IND         | Karnataka      |     245391 |
+| 1156 | Sagar           | IND         | Madhya Pradesh |     195346 |
+| 1161 | Bijapur         | IND         | Karnataka      |     186939 |
+| 1165 | Ratlam          | IND         | Madhya Pradesh |     183375 |
+| 1170 | Shimoga         | IND         | Karnataka      |     179258 |
+| 1180 | Burhanpur       | IND         | Madhya Pradesh |     172710 |
+| 1186 | Dewas           | IND         | Madhya Pradesh |     164364 |
+| 1187 | Murwara (Katni) | IND         | Madhya Pradesh |     163431 |
+| 1193 | Raichur         | IND         | Karnataka      |     157551 |
+| 1196 | Satna           | IND         | Madhya Pradesh |     156630 |
+| 1215 | Morena          | IND         | Madhya Pradesh |     147124 |
+| 1219 | Khandwa         | IND         | Madhya Pradesh |     145133 |
+| 1227 | Timkur          | IND         | Karnataka      |     138903 |
+| 1237 | Gadag Betigeri  | IND         | Karnataka      |     134051 |
+| 1247 | Rewa            | IND         | Madhya Pradesh |     128981 |
+| 1275 | Mandya          | IND         | Karnataka      |     120265 |
+| 1297 | Bhind           | IND         | Madhya Pradesh |     109755 |
+| 1303 | Shivapuri       | IND         | Madhya Pradesh |     108277 |
+| 1304 | Bidar           | IND         | Karnataka      |     108016 |
+| 1329 | Guna            | IND         | Madhya Pradesh |     100490 |
+| 1342 | Hospet          | IND         | Karnataka      |      96322 |
+| 1346 | Mandasor        | IND         | Madhya Pradesh |      95758 |
+| 1347 | Damoh           | IND         | Madhya Pradesh |      95661 |
+| 1352 | Chhindwara      | IND         | Madhya Pradesh |      93731 |
+| 1356 | Vidisha         | IND         | Madhya Pradesh |      92917 |
+| 1359 | Hassan          | IND         | Karnataka      |      90803 |
++------+-----------------+-------------+----------------+------------+
+38 rows in set (0.00 sec)
+
+mysql> select * from city where district="karnataka" and population BETWEEN 250000 and 300000;
++------+-----------+-------------+-----------+------------+
+| ID   | Name      | CountryCode | District  | Population |
++------+-----------+-------------+-----------+------------+
+| 1116 | Mangalore | IND         | Karnataka |     273304 |
+| 1119 | Davangere | IND         | Karnataka |     266082 |
++------+-----------+-------------+-----------+------------+
+2 rows in set (0.02 sec)
+
+mysql> select * from city where Name like '%re' and District="Karnataka";
++------+-----------+-------------+-----------+------------+
+| ID   | Name      | CountryCode | District  | Population |
++------+-----------+-------------+-----------+------------+
+| 1030 | Bangalore | IND         | Karnataka |    2660088 |
+| 1074 | Mysore    | IND         | Karnataka |     480692 |
+| 1116 | Mangalore | IND         | Karnataka |     273304 |
+| 1119 | Davangere | IND         | Karnataka |     266082 |
++------+-----------+-------------+-----------+------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from city where Name like 'M%' and District="Karnataka";
++------+-----------+-------------+-----------+------------+
+| ID   | Name      | CountryCode | District  | Population |
++------+-----------+-------------+-----------+------------+
+| 1074 | Mysore    | IND         | Karnataka |     480692 |
+| 1116 | Mangalore | IND         | Karnataka |     273304 |
+| 1275 | Mandya    | IND         | Karnataka |     120265 |
++------+-----------+-------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from city where Name like '%ng%' and District="Karnataka";
++------+-----------+-------------+-----------+------------+
+| ID   | Name      | CountryCode | District  | Population |
++------+-----------+-------------+-----------+------------+
+| 1030 | Bangalore | IND         | Karnataka |    2660088 |
+| 1116 | Mangalore | IND         | Karnataka |     273304 |
+| 1119 | Davangere | IND         | Karnataka |     266082 |
++------+-----------+-------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from city where district='Karnataka' ORDER BY name
+    -> ;
++------+----------------+-------------+-----------+------------+
+| ID   | Name           | CountryCode | District  | Population |
++------+----------------+-------------+-----------+------------+
+| 1030 | Bangalore      | IND         | Karnataka |    2660088 |
+| 1102 | Belgaum        | IND         | Karnataka |     326399 |
+| 1122 | Bellary        | IND         | Karnataka |     245391 |
+| 1304 | Bidar          | IND         | Karnataka |     108016 |
+| 1161 | Bijapur        | IND         | Karnataka |     186939 |
+| 1119 | Davangere      | IND         | Karnataka |     266082 |
+| 1237 | Gadag Betigeri | IND         | Karnataka |     134051 |
+| 1108 | Gulbarga       | IND         | Karnataka |     304099 |
+| 1359 | Hassan         | IND         | Karnataka |      90803 |
+| 1342 | Hospet         | IND         | Karnataka |      96322 |
+| 1060 | Hubli-Dharwad  | IND         | Karnataka |     648298 |
+| 1275 | Mandya         | IND         | Karnataka |     120265 |
+| 1116 | Mangalore      | IND         | Karnataka |     273304 |
+| 1074 | Mysore         | IND         | Karnataka |     480692 |
+| 1193 | Raichur        | IND         | Karnataka |     157551 |
+| 1170 | Shimoga        | IND         | Karnataka |     179258 |
+| 1227 | Timkur         | IND         | Karnataka |     138903 |
++------+----------------+-------------+-----------+------------+
+17 rows in set (0.04 sec)
+
+mysql> select * from city where district='Karnataka' ORDER BY Name DESC
+    -> ;
++------+----------------+-------------+-----------+------------+
+| ID   | Name           | CountryCode | District  | Population |
++------+----------------+-------------+-----------+------------+
+| 1227 | Timkur         | IND         | Karnataka |     138903 |
+| 1170 | Shimoga        | IND         | Karnataka |     179258 |
+| 1193 | Raichur        | IND         | Karnataka |     157551 |
+| 1074 | Mysore         | IND         | Karnataka |     480692 |
+| 1116 | Mangalore      | IND         | Karnataka |     273304 |
+| 1275 | Mandya         | IND         | Karnataka |     120265 |
+| 1060 | Hubli-Dharwad  | IND         | Karnataka |     648298 |
+| 1342 | Hospet         | IND         | Karnataka |      96322 |
+| 1359 | Hassan         | IND         | Karnataka |      90803 |
+| 1108 | Gulbarga       | IND         | Karnataka |     304099 |
+| 1237 | Gadag Betigeri | IND         | Karnataka |     134051 |
+| 1119 | Davangere      | IND         | Karnataka |     266082 |
+| 1161 | Bijapur        | IND         | Karnataka |     186939 |
+| 1304 | Bidar          | IND         | Karnataka |     108016 |
+| 1122 | Bellary        | IND         | Karnataka |     245391 |
+| 1102 | Belgaum        | IND         | Karnataka |     326399 |
+| 1030 | Bangalore      | IND         | Karnataka |    2660088 |
++------+----------------+-------------+-----------+------------+
+17 rows in set (0.00 sec)
+
+mysql> select * from city where district='Karnataka' ORDER BY Population ASC;
++------+----------------+-------------+-----------+------------+
+| ID   | Name           | CountryCode | District  | Population |
++------+----------------+-------------+-----------+------------+
+| 1359 | Hassan         | IND         | Karnataka |      90803 |
+| 1342 | Hospet         | IND         | Karnataka |      96322 |
+| 1304 | Bidar          | IND         | Karnataka |     108016 |
+| 1275 | Mandya         | IND         | Karnataka |     120265 |
+| 1237 | Gadag Betigeri | IND         | Karnataka |     134051 |
+| 1227 | Timkur         | IND         | Karnataka |     138903 |
+| 1193 | Raichur        | IND         | Karnataka |     157551 |
+| 1170 | Shimoga        | IND         | Karnataka |     179258 |
+| 1161 | Bijapur        | IND         | Karnataka |     186939 |
+| 1122 | Bellary        | IND         | Karnataka |     245391 |
+| 1119 | Davangere      | IND         | Karnataka |     266082 |
+| 1116 | Mangalore      | IND         | Karnataka |     273304 |
+| 1108 | Gulbarga       | IND         | Karnataka |     304099 |
+| 1102 | Belgaum        | IND         | Karnataka |     326399 |
+| 1074 | Mysore         | IND         | Karnataka |     480692 |
+| 1060 | Hubli-Dharwad  | IND         | Karnataka |     648298 |
+| 1030 | Bangalore      | IND         | Karnataka |    2660088 |
++------+----------------+-------------+-----------+------------+
+17 rows in set (0.00 sec)
+
+mysql> select Name, CountryCode from city where District='Karnataka';
++----------------+-------------+
+| Name           | CountryCode |
++----------------+-------------+
+| Bangalore      | IND         |
+| Hubli-Dharwad  | IND         |
+| Mysore         | IND         |
+| Belgaum        | IND         |
+| Gulbarga       | IND         |
+| Mangalore      | IND         |
+| Davangere      | IND         |
+| Bellary        | IND         |
+| Bijapur        | IND         |
+| Shimoga        | IND         |
+| Raichur        | IND         |
+| Timkur         | IND         |
+| Gadag Betigeri | IND         |
+| Mandya         | IND         |
+| Bidar          | IND         |
+| Hospet         | IND         |
+| Hassan         | IND         |
++----------------+-------------+
+17 rows in set (0.00 sec)
+
+mysql> select count(*) from city where District='Karnataka';
++----------+
+| count(*) |
++----------+
+|       17 |
++----------+
+1 row in set (0.14 sec)
+
+mysql> select max(Population) from city where District='Karnataka';
++-----------------+
+| max(Population) |
++-----------------+
+|         2660088 |
++-----------------+
+1 row in set (0.06 sec)
+
+mysql> select min(Population) from city where District='Karnataka';
++-----------------+
+| min(Population) |
++-----------------+
+|           90803 |
++-----------------+
+1 row in set (0.03 sec)
+
+mysql> select * from city where District='Karnataka' Order by Population DESC LIMIT 1;
++------+-----------+-------------+-----------+------------+
+| ID   | Name      | CountryCode | District  | Population |
++------+-----------+-------------+-----------+------------+
+| 1030 | Bangalore | IND         | Karnataka |    2660088 |
++------+-----------+-------------+-----------+------------+
