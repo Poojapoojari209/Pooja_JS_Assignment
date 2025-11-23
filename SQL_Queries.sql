@@ -430,3 +430,249 @@ mysql> select * from city where District='Karnataka' Order by Population DESC LI
 +------+-----------+-------------+-----------+------------+
 | 1030 | Bangalore | IND         | Karnataka |    2660088 |
 +------+-----------+-------------+-----------+------------+
+
+mysql> select AVG(Population) from city where District="Karnataka";
++-----------------+
+| AVG(Population) |
++-----------------+
+|     377438.8824 |
++-----------------+
+1 row in set (0.12 sec)
+
+mysql> select contient, Count(*) as Total_Contries from Country Group By Continent;
+ERROR 1054 (42S22): Unknown column 'contient' in 'field list'
+mysql> select continent, Count(*) as Total_Contries from Country Group By Continent;
++---------------+----------------+
+| continent     | Total_Contries |
++---------------+----------------+
+| North America |             37 |
+| Asia          |             51 |
+| Africa        |             58 |
+| Europe        |             46 |
+| South America |             14 |
+| Oceania       |             28 |
+| Antarctica    |              5 |
++---------------+----------------+
+7 rows in set (0.10 sec)
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
+| test2              |
+| test3              |
+| world              |
++--------------------+
+8 rows in set (0.17 sec)
+
+mysql> Describe test2;
+ERROR 1046 (3D000): No database selected
+mysql> use test2;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_test2 |
++-----------------+
+| users           |
+| users1          |
++-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from users1;
++------+-----------+------------------+----------+-----------+
+| user | user_name | email            | password | create_at |
++------+-----------+------------------+----------+-----------+
+|    1 | sachin    | sachin@gmail.com | dgr677   | NULL      |
+|    2 | kavya     | kavya@gmail.com  | sa6788   | NULL      |
+|    3 | ravi      | ravi@gmail.com   | dgr677   | NULL      |
+|    4 | neethu    | neethu@gmail.com | d888hh7  | NULL      |
+|    5 | anitha    | anitha@gmail.com | ui997    | NULL      |
++------+-----------+------------------+----------+-----------+
+5 rows in set (0.03 sec)
+
+mysql> update users1 SET user_name="Bavya" where user = 2;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from users1;
++------+-----------+------------------+----------+-----------+
+| user | user_name | email            | password | create_at |
++------+-----------+------------------+----------+-----------+
+|    1 | sachin    | sachin@gmail.com | dgr677   | NULL      |
+|    2 | Bavya     | kavya@gmail.com  | sa6788   | NULL      |
+|    3 | ravi      | ravi@gmail.com   | dgr677   | NULL      |
+|    4 | neethu    | neethu@gmail.com | d888hh7  | NULL      |
+|    5 | anitha    | anitha@gmail.com | ui997    | NULL      |
++------+-----------+------------------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_test2 |
++-----------------+
+| users           |
+| users1          |
++-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from users1;
++------+-----------+------------------+----------+-----------+
+| user | user_name | email            | password | create_at |
++------+-----------+------------------+----------+-----------+
+|    1 | sachin    | sachin@gmail.com | dgr677   | NULL      |
+|    2 | kavya     | kavya@gmail.com  | sa6788   | NULL      |
+|    3 | ravi      | ravi@gmail.com   | dgr677   | NULL      |
+|    4 | neethu    | neethu@gmail.com | d888hh7  | NULL      |
+|    5 | anitha    | anitha@gmail.com | ui997    | NULL      |
++------+-----------+------------------+----------+-----------+
+5 rows in set (0.03 sec)
+
+mysql> update users1 SET user_name="Bavya" where user = 2;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from users1;
++------+-----------+------------------+----------+-----------+
+| user | user_name | email            | password | create_at |
++------+-----------+------------------+----------+-----------+
+|    1 | sachin    | sachin@gmail.com | dgr677   | NULL      |
+|    2 | Bavya     | kavya@gmail.com  | sa6788   | NULL      |
+|    3 | ravi      | ravi@gmail.com   | dgr677   | NULL      |
+|    4 | neethu    | neethu@gmail.com | d888hh7  | NULL      |
+|    5 | anitha    | anitha@gmail.com | ui997    | NULL      |
++------+-----------+------------------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> Alter table users1 rename to Employee;
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_test2 |
++-----------------+
+| employee        |
+| users           |
++-----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table Employee Add Phone_number varchar(15);
+Query OK, 0 rows affected (0.31 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe users;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| user_id    | int          | YES  |     | NULL    |       |
+| user_name  | varchar(100) | YES  |     | NULL    |       |
+| email      | varchar(255) | YES  |     | NULL    |       |
+| password   | varchar(255) | YES  |     | NULL    |       |
+| created_at | timestamp    | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.08 sec)
+
+mysql> Truncate Table users;
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> select * from users;
+Empty set (0.00 sec)
+
+
+mysql> select * from Employee;
++------+-----------+------------------+----------+-----------+--------------+
+| user | user_name | email            | password | create_at | Phone_number |
++------+-----------+------------------+----------+-----------+--------------+
+|    1 | sachin    | sachin@gmail.com | dgr677   | NULL      | NULL         |
+|    2 | Bavya     | kavya@gmail.com  | sa6788   | NULL      | NULL         |
+|    3 | ravi      | ravi@gmail.com   | dgr677   | NULL      | NULL         |
+|    4 | neethu    | neethu@gmail.com | d888hh7  | NULL      | NULL         |
+|    5 | anitha    | anitha@gmail.com | ui997    | NULL      | NULL         |
++------+-----------+------------------+----------+-----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from Employee where email="ravi@gmail.com";
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from Employee;
++------+-----------+------------------+----------+-----------+--------------+
+| user | user_name | email            | password | create_at | Phone_number |
++------+-----------+------------------+----------+-----------+--------------+
+|    1 | sachin    | sachin@gmail.com | dgr677   | NULL      | NULL         |
+|    2 | Bavya     | kavya@gmail.com  | sa6788   | NULL      | NULL         |
+|    4 | neethu    | neethu@gmail.com | d888hh7  | NULL      | NULL         |
+|    5 | anitha    | anitha@gmail.com | ui997    | NULL      | NULL         |
++------+-----------+------------------+----------+-----------+--------------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table User(
+    -> user_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> user_name VARCHAR(100) NOT NULL,
+    -> email VARCHAR(100) NOT NULL UNIQUE,
+    -> password VARCHAR(255) NOT NULL,
+    -> created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> describe User;
++------------+--------------+------+-----+-------------------+-------------------+
+| Field      | Type         | Null | Key | Default           | Extra             |
++------------+--------------+------+-----+-------------------+-------------------+
+| user_id    | int          | NO   | PRI | NULL              | auto_increment    |
+| user_name  | varchar(100) | NO   |     | NULL              |                   |
+| email      | varchar(100) | NO   | UNI | NULL              |                   |
+| password   | varchar(255) | NO   |     | NULL              |                   |
+| created_at | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++------------+--------------+------+-----+-------------------+-------------------+
+5 rows in set (0.00 sec)
+
+
+
+
+mysql> create table User(
+    -> user_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> user_name VARCHAR(100) NOT NULL,
+    -> email VARCHAR(100) NOT NULL UNIQUE,
+    -> password VARCHAR(255) NOT NULL,
+    -> created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> describe User;
++------------+--------------+------+-----+-------------------+-------------------+
+| Field      | Type         | Null | Key | Default           | Extra             |
++------------+--------------+------+-----+-------------------+-------------------+
+| user_id    | int          | NO   | PRI | NULL              | auto_increment    |
+| user_name  | varchar(100) | NO   |     | NULL              |                   |
+| email      | varchar(100) | NO   | UNI | NULL              |                   |
+| password   | varchar(255) | NO   |     | NULL              |                   |
+| created_at | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++------------+--------------+------+-----+-------------------+-------------------+
+5 rows in set (0.00 sec)
+
+ 
+mysql> insert into User (user_name, email, password) values("Rahul", "rahul@gmail.com", "12ft4");
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into User (user_name, email, password) values("Rahul", "rahul@gmail.com", "12ft4");
+ERROR 1062 (23000): Duplicate entry 'rahul@gmail.com' for key 'user.email'
+
+mysql> insert into User (user_name, email, password) values("Rahul", "rahul2@gmail.com", "12ft4");
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into User (user_name, email, password) values("kiran", "kiran2@gmail.com", "88ft4");
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from User;
++---------+-----------+------------------+----------+---------------------+
+| user_id | user_name | email            | password | created_at          |
++---------+-----------+------------------+----------+---------------------+
+|       1 | Rahul     | rahul@gmail.com  | 12ft4    | 2025-11-22 20:30:59 |
+|       3 | Rahul     | rahul2@gmail.com | 12ft4    | 2025-11-22 20:32:34 |
+|       4 | kiran     | kiran2@gmail.com | 88ft4    | 2025-11-22 20:33:04 |
++---------+-----------+------------------+----------+---------------------+
+3 rows in set (0.00 sec)
