@@ -676,3 +676,405 @@ mysql> select * from User;
 |       4 | kiran     | kiran2@gmail.com | 88ft4    | 2025-11-22 20:33:04 |
 +---------+-----------+------------------+----------+---------------------+
 3 rows in set (0.00 sec)
+
+mysql> use ecommerce;
+Database changed
+mysql> create table customer;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> show tables;
+Empty set (0.12 sec)
+
+mysql> create table Customer(
+    -> id int AUTO_INCREMENT,
+    -> name VARCHAR(100
+    -> ),
+    -> email VARCHAR(50),
+    -> address VARCHAR(200),
+    -> PRIMARY KEY(id));
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> describe Customer;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(100) | YES  |     | NULL    |                |
+| email   | varchar(50)  | YES  |     | NULL    |                |
+| address | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+4 rows in set (0.20 sec)
+
+mysql> insert into Customer (name, email, address) values
+    ->      ('Sumesh','Sumesh@gmail.com', 'Delhi'),
+    ->      ('Girish','Girish@gmail.com', 'Mumbai'),
+    ->      ('Faran','Faran@gmail.com', 'Mysore'),
+    -> ('Raj','raj@gmail.com', 'Banglore');
+Query OK, 4 rows affected (0.18 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into Customer (id, name, email, address) values (4, 'kiran', 'kirangmail.com','manglore');
+ERROR 1062 (23000): Duplicate entry '4' for key 'customer.PRIMARY'
+
+
+mysql> insert into Customer (id, name, email, address) values (8, 'kiran', 'kirangmail.com','manglore');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from Customer;
++----+--------+------------------+----------+
+| id | name   | email            | address  |
++----+--------+------------------+----------+
+|  1 | Sumesh | Sumesh@gmail.com | Delhi    |
+|  2 | Girish | Girish@gmail.com | Mumbai   |
+|  3 | Faran  | Faran@gmail.com  | Mysore   |
+|  4 | Raj    | raj@gmail.com    | Banglore |
+|  8 | kiran  | kirangmail.com   | manglore |
++----+--------+------------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Customer (name, email, address) values ('kavya', 'kavya@gmail.com','udupi');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from Customer;
++----+--------+------------------+----------+
+| id | name   | email            | address  |
++----+--------+------------------+----------+
+|  1 | Sumesh | Sumesh@gmail.com | Delhi    |
+|  2 | Girish | Girish@gmail.com | Mumbai   |
+|  3 | Faran  | Faran@gmail.com  | Mysore   |
+|  4 | Raj    | raj@gmail.com    | Banglore |
+|  8 | kiran  | kirangmail.com   | manglore |
+|  9 | kavya  | kavya@gmail.com  | udupi    |
++----+--------+------------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into Customer (email, address) values ( 'anitha@mail.com','goa');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from Customer;
++----+--------+------------------+----------+
+| id | name   | email            | address  |
++----+--------+------------------+----------+
+|  1 | Sumesh | Sumesh@gmail.com | Delhi    |
+|  2 | Girish | Girish@gmail.com | Mumbai   |
+|  3 | Faran  | Faran@gmail.com  | Mysore   |
+|  4 | Raj    | raj@gmail.com    | Banglore |
+|  8 | kiran  | kirangmail.com   | manglore |
+|  9 | kavya  | kavya@gmail.com  | udupi    |
+| 10 | NULL   | anitha@mail.com  | goa      |
++----+--------+------------------+----------+
+7 rows in set (0.00 sec)
+
+/* not take null value*/
+
+mysql> select * from Customer;
++----+--------+------------------+----------+
+| id | name   | email            | address  |
++----+--------+------------------+----------+
+|  1 | Sumesh | Sumesh@gmail.com | Delhi    |
+|  2 | Girish | Girish@gmail.com | Mumbai   |
+|  3 | Faran  | Faran@gmail.com  | Mysore   |
+|  4 | Raj    | raj@gmail.com    | Banglore |
+|  8 | kiran  | kirangmail.com   | manglore |
+|  9 | kavya  | kavya@gmail.com  | udupi    |
+| 10 | NULL   | anitha@mail.com  | goa      |
++----+--------+------------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> Alter table Customer MODIFY name VARCHAR(20) NOT NULL;
+ERROR 1265 (01000): Data truncated for column 'name' at row 7
+
+mysql> delete from Customer where id = 10;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> Alter table Customer MODIFY name VARCHAR(20) NOT NULL;
+Query OK, 6 rows affected (0.51 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> alter table Customer Add CONSTRAINT UNIQUE (email);
+Query OK, 0 rows affected (0.41 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Describe Customer;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20)  | NO   |     | NULL    |                |
+| email   | varchar(50)  | YES  | UNI | NULL    |                |
+| address | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Product(
+    -> id int,
+    -> title varchar(20),
+    -> description varchar(50),
+    -> price varchar(255),
+    -> Primary key(id),
+    -> Primary Key(title));
+ERROR 1068 (42000): Multiple primary key defined
+
+mysql> create table Product(
+    -> id int,
+    -> title varchar(20),
+    -> description varchar(50),
+    -> price varchar(255),
+    -> Primary key(id),
+    -> UNIQUE (title));
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> Describe Product;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int          | NO   | PRI | NULL    |       |
+| title       | varchar(20)  | YES  | UNI | NULL    |       |
+| description | varchar(50)  | YES  |     | NULL    |       |
+| price       | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table Product Drop INDEX title;
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Product;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int          | NO   | PRI | NULL    |       |
+| title       | varchar(20)  | YES  |     | NULL    |       |
+| description | varchar(50)  | YES  |     | NULL    |       |
+| price       | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> Drop table Product;
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> create table Product(
+    -> id int Auto_increment ,
+    -> title varchar(100) NOT NULL DEFAULT "AAAA",
+    -> description varchar(200),
+    -> price varchar(200),
+    -> Primary key (id),
+    -> Unique (title));
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> describe Product;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int          | NO   | PRI | NULL    | auto_increment |
+| title       | varchar(100) | NO   | UNI | AAAA    |                |
+| description | varchar(200) | YES  |     | NULL    |                |
+| price       | varchar(200) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create Index cust_name ON Customer (name);
+Query OK, 0 rows affected (0.24 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Customer;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20)  | NO   | MUL | NULL    |                |
+| email   | varchar(50)  | YES  | UNI | NULL    |                |
+| address | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> Alter table Customer drop index cust_name;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Customer;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20)  | NO   |     | NULL    |                |
+| email   | varchar(50)  | YES  | UNI | NULL    |                |
+| address | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table voters(
+    -> id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> name varchar(200),
+    -> age int,
+    -> check(age > 17));
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> describe voters;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(200) | YES  |     | NULL    |                |
+| age   | int          | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into voters(name, age) values ('prakash', '20');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into voters(name, age) values ('pavi', '16');
+ERROR 3819 (HY000): Check constraint 'voters_chk_1' is violated.
+mysql> select * from voters;
++----+---------+------+
+| id | name    | age  |
++----+---------+------+
+|  1 | prakash |   20 |
++----+---------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into voters(name, age) values ('pavi', '26');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from voters;
++----+---------+------+
+| id | name    | age  |
++----+---------+------+
+|  1 | prakash |   20 |
+|  2 | pavi    |   26 |
++----+---------+------+
+2 rows in set (0.00 sec)
+
+
+mysql> create table e_users(
+    -> user_id int auto_increment Primary key,
+    -> user_name varchar(200) not null,
+    -> email varchar(30) not null unique,
+    -> password varchar(50) not null,
+    -> created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> create table Productes(
+    -> Product_id int AUTO_INCREMENT PRIMARY KEY,
+    -> Product_name varchar(100) not null,
+    -> description text,
+    -> price decimal(10, 2) not null,
+    -> stock int not null,
+    -> created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> create table orders(
+    -> order_id int auto_increment Primary Key,
+    -> user_id int not null,
+    -> order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -> total decimal(10,2) not null,
+    -> FOREIGN KEY (user_id) REFERENCES e_users(user_id));
+Query OK, 0 rows affected (0.34 sec)
+
+
+mysql> insert into e_users(user_name, email, password) values ('mohammad Ali', 'mohammadali@gmail.com', 'yet764');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into e_users(user_name, email, password) values ('neetha', 'neetha@gmail.com', 'ttt67');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into e_users(user_name, email, password) values ('pooja', 'pooja@gmail.com', 'iiii67');
+Query OK, 1 row affected (0.05 sec)
+
+
+
+
+mysql> insert into Productes(Product_name, description, price, stock) values ('laptop', 'high performance', 999.99, 10);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Productes(Product_name, description, price, stock) values ('phone', 'best performance', 699.99, 20);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Productes(Product_name, description, price, stock) values ('headphone', 'performance', 599.99, 30);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> alter table orders add column Product_id int;
+Query OK, 0 rows affected (0.43 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into orders(user_id, Product_id) values(1,6), (3,5);
+Query OK, 2 rows affected (0.10 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from orders;
++----------+---------+---------------------+------------+
+| order_id | user_id | order_date          | Product_id |
++----------+---------+---------------------+------------+
+|        1 |       1 | 2025-11-23 11:41:35 |          6 |
+|        2 |       3 | 2025-11-23 11:41:35 |          5 |
++----------+---------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select orders.order_id, e_users.user_name, e_users.email, Product_id from orders INNER JOIN e_users on e_users.user_id=orders.user_id;
++----------+--------------+-----------------------+------------+
+| order_id | user_name    | email                 | Product_id |
++----------+--------------+-----------------------+------------+
+|        1 | mohammad Ali | mohammadali@gmail.com |          6 |
+|        2 | pooja        | pooja@gmail.com       |          5 |
++----------+--------------+-----------------------+------------+
+2 rows in set (0.00 sec)
+
+/*sql online compiler*/
+
+select Customers.customer_id, Orders.order_id, Orders.amount, Customers.country from Orders INNER JOIN Customers ON Customers.customer_id = Orders.customer_id;
+
+customer_id	order_id	amount	country
+4	1	400	UK
+4	2	300	UK
+3	3	12000	UK
+1	4	400	USA
+2	5	250	USA
+
+select Customers.customer_id, Orders.order_id, Orders.amount, Customers.country from Orders LEFT JOIN Customers ON Customers.customer_id = Orders.customer_id;
+
+customer_id	order_id	amount	country
+4	1	400	UK
+4	2	300	UK
+3	3	12000	UK
+1	4	400	USA
+2	5	250	USA
+
+select customer_id from Customers UNION select customer_id from Orders;
+customer_id
+1
+2
+3
+4
+5
+
+select customer_id from Customers UNION All select customer_id from Orders;
+customer_id
+1
+2
+3
+4
+5
+4
+4
+3
+1
+2
+
+select customer_id, amount, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS row_num from Orders;
+
+Output
+customer_id 	amount	row_num
+1	            400	       1
+2	            250	       1
+3	            12000	   1
+4	            400	       1
+4	            300	       2
+
+select customer_id, ROW_NUMBER() OVER (ORDER BY customer_id) from Customers;
+
+customer_id	      ROW_NUMBER() OVER (ORDER BY customer_id)
+1	                        1
+2	                        2
+3	                        3
+4	                        4
+5	                        5
