@@ -1078,3 +1078,50 @@ customer_id	      ROW_NUMBER() OVER (ORDER BY customer_id)
 3	                        3
 4	                        4
 5	                        5
+
+
+/* sub query with where*/
+select first_name, age FROM Customers where age > (select AVG(age) from customers);
+
+first_name	age
+John	    31
+Betty	    28
+
+/* with from*/
+select c.first_name, c.country FROM (SELECT first_name, country from Customers)AS c WHERE c.country = "USA";
+
+first_name	country
+John	    USA
+Robert	    USA
+
+-- correlated subquery
+select first_name, customer_id FROM Customers c where exists ( select 1 from Orders o where o.customer_id = c.customer_id and o.amount > 500); 
+
+first_name	customer_id
+David	    3
+
+select first_name, country, age FROM Customers c1 where age > ( select avg(c2.age) from Customers c2 where c2.country = c1.country);
+
+first_name	country	    age
+John	     USA	    31
+John	     UK	        25
+
+/* partition with ranking*/
+select customer_id, order_id, amount, RANK() OVER (PARTITION BY customer_id ORDER BY amount desc) AS rank_by_amount from Orders;
+
+customer_id	order_id	amount	rank_by_amount
+1	        4	        400	        1
+2	        5	        250	        1
+3	        3	        12000	    1
+4	        1	        400	        1
+4	        2	        300	        2
+
+/*rank()*/
+select customer_id, order_id, item, amount, RANK() OVER ( ORDER BY amount desc) AS rank_by_amount from Orders;
+
+customer_id	order_id	item	    amount	rank_by_amount
+3	        3	        Monitor	    12000	1
+4	        1	        Keyboard	400	    2
+1	        4	        Keyboard	400	    2
+4	        2	        Mouse	    300	    4
+2	        5	        Mousepad	250	    5
