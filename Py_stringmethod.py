@@ -26,3 +26,16 @@ print(f"Joined: {joined_string}")
 print(f"Starts with 'Python': {my_string.startswith('Python')}")
 print(f"Ends with 'Fun!': {my_string.endswith('Fun!')}")
 
+# strip():
+text = "   Python Programming   "
+print(text.strip())  # Output: Python Programming
+
+# find():
+text = "Python is fun"
+index = text.find("is")
+print(index)  # Output: 7
+
+# startswith() and endswith():
+text = "Programming"
+print(text.startswith("Pro"))  # Output: True
+print(text.endswith("ing"))    # Output: True
