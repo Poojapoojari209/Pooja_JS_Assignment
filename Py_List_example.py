@@ -11,7 +11,7 @@ my_list.insert(1, 15)
 print(f"List after insert: {my_list}")
 
 # Remove an element by value
-my_list.remove(30)
+my_list.remove(30) 
 print(f"List after remove: {my_list}")
 
 # Remove an element by index and get its value
