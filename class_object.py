@@ -57,3 +57,25 @@ d2 = Dog("Bruno")
 
 d1.bark()
 d2.bark()
+
+# class Student:
+
+#     def __init__(self, name, age): 
+#         self.name1: "Anu"
+#         self.age: 22
+    
+# s1 = Student("anu", 23)
+# s2 
+
+# print(s1.name1)
+# print(s1.age)
+
+numbers = [100, 12, 33, 24, 65, 36]
+# numbers.sort()
+# print(numbers)
+
+for i in range(len(numbers)):
+    for j in range(0, len(numbers) - i - 1):
+        if numbers[j] > numbers[j + 1]:
+            numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
+print(numbers)
