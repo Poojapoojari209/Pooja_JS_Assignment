@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-center mb-4">Products</h2>
+
+<div class="row" id="productList"></div>
+
+<script>
+async function loadProducts() {
+    let res = await fetch("/api/products");
+    let products = await res.json();
+
+    let container = document.getElementById("productList");
+    container.innerHTML = "";
+
+    products.forEach(p => {
+        container.innerHTML += `
+            <div class="col-md-4 mb-3">
+                <div class="card shadow p-3">
+                    <h5>${p.name}</h5>
+                    <p>₹ ${p.price}</p>
+                    <p>${p.description || ""}</p>
+                </div>
+            </div>
+        `;
+    });
+}
+
+loadProducts();
+</script>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center mb-4">Add Product</h2>
+
+<div class="card shadow p-4 mx-auto" style="max-width: 400px;">
+    <form id="productForm">
+        <input type="text" class="form-control mb-3" placeholder="Product Name" id="name" required>
+        <input type="number" class="form-control mb-3" placeholder="Price" id="price" required>
+        <textarea class="form-control mb-3" placeholder="Description" id="description"></textarea>
+
+        <button type="submit" class="btn btn-success w-100">Add Product</button>
+    </form>
+
+    <p class="text-danger mt-2" id="errorMsg"></p>
+    <p class="text-success mt-2" id="successMsg"></p>
+</div>
+
+<script>
+document.getElementById("productForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    if(!token){
+        alert("Please login first");
+        window.location.href = "/login";
+        return;
+    }
+
+    let res = await fetch("/product", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+            name: document.getElementById("name").value,
+            price: document.getElementById("price").value,
+            description: document.getElementById("description").value
+        })
+    });
+
+    let data = await res.json();
+
+    if(res.ok){
+        document.getElementById("successMsg").innerText = data.msg;
+        document.getElementById("errorMsg").innerText = "";
+        document.getElementById("productForm").reset();
+    } else {
+        document.getElementById("errorMsg").innerText = data.msg || "Unauthorized";
+        document.getElementById("successMsg").innerText = "";
+    }
+});
+</script>
+
+{% endblock %}
