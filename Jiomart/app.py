@@ -8,7 +8,7 @@ from flask_jwt_extended import (
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from config import Config
-from models import db, User, Product
+from models import db, User, Product, Cart
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -45,6 +45,10 @@ def products_page():
 @app.route('/add-product', methods=['GET'])
 def add_product_page():
     return render_template("add_product.html")
+
+@app.route('/cart', methods=['GET'])
+def cart_page():
+    return render_template("cart.html")
 
 # -----------------------
 # SIGNUP API
@@ -139,5 +143,55 @@ def get_products():
 # -----------------------
 # RUN
 # -----------------------
+
+# cart
+@app.route('/cart/add', methods=['POST'])
+@jwt_required()
+def add_to_cart():
+    user_id = int(get_jwt_identity())
+    data = request.get_json()
+
+    product_id = data.get("product_id")
+
+    cart_item = Cart.query.filter_by(
+        user_id=user_id,
+        product_id=product_id
+    ).first()
+
+    if cart_item:
+        cart_item.quantity += 1
+    else:
+        cart_item = Cart(
+            user_id=user_id,
+            product_id=product_id,
+            quantity=1
+        )
+        db.session.add(cart_item)
+
+    db.session.commit()
+    return jsonify({"msg": "Product added to cart"})
+
+# view cart
+@app.route('/cart', methods=['GET'])
+@jwt_required()
+def view_cart():
+    user_id = int(get_jwt_identity())
+
+    items = Cart.query.filter_by(user_id=user_id).all()
+    result = []
+
+    for item in items:
+        product = Product.query.get(item.product_id)
+        result.append({
+            "name": product.name,
+            "price": product.price,
+            "quantity": item.quantity
+        })
+
+    return jsonify(result)
+
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
