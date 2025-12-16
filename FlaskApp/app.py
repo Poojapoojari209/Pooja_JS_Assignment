@@ -9,7 +9,7 @@ def home():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
-    if request.method == "POST":
+    if request.method == 'POST':
 
         id = request.form.get('id')
         uname = request.form.get('uname')
@@ -17,7 +17,7 @@ def register_user():
         password = request.form.get('password')
 
         # Connect to server
-        conn = mysql.connector.connect(
+        cnx = mysql.connector.connect(
             host='127.0.0.1',
             port=3306,
             user='root',
@@ -25,18 +25,32 @@ def register_user():
             database='sample'
         )
 
-        cur = conn.cursor()
+        cur = cnx.cursor()
 
         sql = "Insert into users (ID, UNAME, EMAIL, PASSWORD) values (%s, %s, %s, %s)"
         val = (id, uname, email, password)
 
         cur.execute(sql, val)
-        cur.close()
+        cnx.commit()
+        # cur.close()
       
         return "Successfully inserted the data"
-    
-    return render_template('register.html')
+    else:
+        return render_template('register.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def get_user():
 
-if __name__ == "__main__":
+    cnx = mysql.connector.connect(
+        host='127.0.0.1',
+            port=3306,
+            user='root',
+            password='Pooja@14',
+            database='sample'
+    )
+    cur = cnx.cursor()
+    cur.execute(f"SELECT * FROM users")
+    rows = cur.fefetvhchonel()
+
+if __name__ == '__main__':
     app.run(debug=True)
