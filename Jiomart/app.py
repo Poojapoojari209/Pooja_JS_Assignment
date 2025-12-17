@@ -131,11 +131,13 @@ def get_products():
             "id": p.id,
             "name": p.name,
             "price": p.price,
-            "description": p.description
+            "description": p.description,
+            "image": p.image
         } for p in products
     ])
 
 # cart
+# add to cart
 @app.route('/cart/add', methods=['POST'])
 @jwt_required()
 def add_to_cart():
@@ -162,8 +164,10 @@ def add_to_cart():
     db.session.commit()
     return jsonify({"msg": "Product added to cart"})
 
+
 # view cart
-@app.route('/cart', methods=['GET'])
+# view cart API
+@app.route('/api/cart', methods=['GET'])
 @jwt_required()
 def view_cart():
     user_id = int(get_jwt_identity())
