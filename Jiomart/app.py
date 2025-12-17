@@ -22,7 +22,7 @@ with app.app_context():
     db.create_all()
 
 
-# FRONTEND ROUTES
+# ROUTES
 @app.route('/')
 def home():
     return render_template("products.html")
@@ -40,16 +40,12 @@ def products_page():
     return render_template("products.html")
 
 
-@app.route('/add-product', methods=['GET'])
-def add_product_page():
-    return render_template("add_product.html")
-
 @app.route('/cart', methods=['GET'])
 def cart_page():
     return render_template("cart.html")
 
 
-# SIGNUP API
+# SIGNUP
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -60,10 +56,10 @@ def signup():
     password = data.get("password")
 
     if not name or not email or not password:
-        return jsonify({"msg": "Please fill all fields"}), 400
+        return jsonify({"msg": "Please fill all fields"})
 
     if User.query.filter_by(email=email).first():
-        return jsonify({"msg": "Email already exists"}), 400
+        return jsonify({"msg": "Email already exists"})
 
     hashed = generate_password_hash(password)
     user = User(name=name, email=email, password=hashed)
@@ -71,9 +67,9 @@ def signup():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({"msg": "Signup successful"}), 201
+    return jsonify({"msg": "Signup successful"})
 
-# LOGIN API (JWT)
+# LOGIN 
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -85,42 +81,13 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
-        return jsonify({"msg": "Invalid email or password"}), 401
+        return jsonify({"msg": "Invalid email or password"})
 
     token = create_access_token(identity=str(user.id))
 
     return jsonify({"token": token})
 
-
-# ADD PRODUCT (JWT PROTECTED)
-
-@app.route('/product', methods=['POST'])
-@jwt_required()
-def add_product():
-    user_id = get_jwt_identity()  # always string now
-    print("JWT USER:", user_id)
-
-    data = request.get_json()
-
-    name = data.get("name")
-    price = data.get("price")
-    description = data.get("description")
-
-    if not name or not price:
-        return jsonify({"msg": "Name and price required"}), 400
-
-    product = Product(
-        name=name,
-        price=price,
-        description=description
-    )
-
-    db.session.add(product)
-    db.session.commit()
-
-    return jsonify({"msg": "Product added successfully"}), 201
-
-# PRODUCTS API
+# PRODUCTS 
 
 @app.route('/api/products', methods=['GET'])
 def get_products():
@@ -166,7 +133,6 @@ def add_to_cart():
 
 
 # view cart
-# view cart API
 @app.route('/api/cart', methods=['GET'])
 @jwt_required()
 def view_cart():

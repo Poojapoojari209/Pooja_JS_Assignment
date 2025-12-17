@@ -1,7 +1,7 @@
 class Config:
     SECRET_KEY = "pooja_secret_key"
 
-    # Corrected password encoding
+    
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:Pooja%4014@localhost/Sample"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
