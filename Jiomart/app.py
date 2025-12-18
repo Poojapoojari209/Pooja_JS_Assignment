@@ -70,7 +70,6 @@ def signup():
     return jsonify({"msg": "Signup successful"})
 
 # LOGIN 
-
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
