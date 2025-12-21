@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JioMart</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .jiomart-navbar {
+            background-color: #0c2d6b; 
+        }
+
+        .jiomart-logo {
+            height: 38px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .search-input {
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg jiomart-navbar px-4">
+    <div class="container-fluid">
+
+        <!-- LOGO -->
+        <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="/products">
+            <img src="{{ url_for('static', filename='images/jiomart-logo.png') }}"
+                 alt="JioMart"
+                 class="jiomart-logo me-2">
+            JioMart
+        </a>
+
+        <!-- SEARCH BAR -->
+        <form class="d-flex mx-auto" style="width: 45%;" method="GET" action="/products">
+            <input class="form-control me-2 search-input"
+                   type="search"
+                   name="q"
+                   placeholder="Search essentials, groceries..."
+                   aria-label="Search">
+            <button class="btn btn-light" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <!-- RIGHT MENU -->
+        <ul class="navbar-nav ms-auto align-items-center">
+
+            <li class="nav-item me-3">
+                <a class="nav-link text-white" href="/signup">Sign Up</a>
+            </li>
+
+            <li class="nav-item me-3">
+                <a class="nav-link text-white" href="/login">Login</a>
+            </li>
+
+            <!-- CART ICON -->
+            <li class="nav-item position-relative">
+                <a class="nav-link text-white" href="/cart">
+                    <i class="bi bi-cart3 fs-4"></i>
+
+                    
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+</nav>
+
+<!-- PAGE CONTENT -->
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

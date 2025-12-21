@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-center mb-4">Top Products</h2>
+
+<div class="row" id="productList"></div>
+
+<script>
+async function loadProducts() {
+    let res = await fetch("/api/products");
+    let products = await res.json();
+
+    let container = document.getElementById("productList");
+    container.innerHTML = "";
+
+  
+    products.slice(0, 4).forEach(p => {
+        container.innerHTML += `
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 shadow-sm">
+
+                    <!-- Product Image -->
+                    <img src="${p.image || '/static/images/default-product.png'}"
+                         class="card-img-top"
+                         style="height:180px; object-fit:contain;"
+                         alt="${p.name}">
+
+                    <div class="card-body text-center">
+                        <h6 class="card-title">${p.name}</h6>
+                        <p class="fw-bold text-success">₹ ${p.price}</p>
+                        <p class="text-muted small">${p.description || ''}</p>
+
+                        <button class="btn btn-primary w-100"
+                                onclick="addToCart(${p.id})">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+async function addToCart(productId) {
+    let token = localStorage.getItem("token");
+
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "/login";
+        return;
+    }
+
+    let res = await fetch("/cart/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+            product_id: productId
+        })
+    });
+
+    let data = await res.json();
+    alert(data.msg || "Added to cart");
+}
+
+loadProducts();
+</script>
+
+{% endblock %}

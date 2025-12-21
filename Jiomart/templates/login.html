@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-center mb-4">Login</h2>
+
+<div class="card shadow p-4 mx-auto" style="max-width: 400px;">
+    <form id="loginForm">
+        <input type="email" class="form-control mb-3" placeholder="Email" id="email" required>
+        <input type="password" class="form-control mb-3" placeholder="Password" id="password" required>
+
+        <button type="submit" class="btn btn-success w-100">Login</button>
+    </form>
+
+    <p class="text-danger mt-2" id="errorMsg"></p>
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    let res = await fetch("/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            email: email.value,
+            password: password.value
+        })
+    });
+
+    let output = await res.json();
+
+    if(res.ok){
+        localStorage.setItem("token", output.token);
+        alert("Login successful");
+        window.location.href = "/products";
+    } else {
+        errorMsg.innerText = output.msg;
+    }
+});
+</script>
+
+{% endblock %}

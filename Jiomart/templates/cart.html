@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">My Cart</h2>
+
+<ul id="cartList" class="list-group"></ul>
+
+<script>
+async function loadCart() {
+    let token = localStorage.getItem("token");
+
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "/login";
+        return;
+    }
+
+    let res = await fetch("/api/cart", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
+
+    let items = await res.json();
+    let ul = document.getElementById("cartList");
+    ul.innerHTML = "";
+
+    items.forEach(i => {
+        ul.innerHTML += `
+            <li class="list-group-item d-flex justify-content-between">
+                <span>${i.name} (${i.quantity})</span>
+                <strong>₹ ${i.price * i.quantity}</strong>
+            </li>
+        `;
+    });
+}
+
+loadCart();
+</script>
+{% endblock %}
