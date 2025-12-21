@@ -8,7 +8,7 @@ SECRET_KEY = "mysecretkey"
 # Home route
 @app.route("/")
 def home():
-    return "Flask JWT App Running!"
+    return "Flask JwT example!"
 
 # Generate JWT
 @app.route("/login")
