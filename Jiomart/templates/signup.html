@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-center mb-4">Sign Up</h2>
+
+<div class="card shadow p-4 mx-auto" style="max-width: 400px;">
+    <form id="signupForm">
+        <input type="text" class="form-control mb-3" placeholder="Name" id="name" required>
+        <input type="email" class="form-control mb-3" placeholder="Email" id="email" required>
+        <input type="password" class="form-control mb-3" placeholder="Password" id="password" required>
+
+        <button type="submit" class="btn btn-success w-100">Signup</button>
+    </form>
+
+    <p class="text-danger mt-2" id="errorMsg"></p>
+    <p class="text-success mt-2" id="successMsg"></p>
+</div>
+
+<script>
+document.getElementById("signupForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    if(!nameInput.value || !emailInput.value || !passwordInput.value){
+        document.getElementById("errorMsg").innerText = "Please fill all fields";
+        return;
+    }
+
+    let res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name: nameInput.value,
+            email: emailInput.value,
+            password: passwordInput.value
+        })
+    });
+
+    let data = await res.json();
+
+    if(res.ok){
+        document.getElementById("successMsg").innerText = data.msg;
+        document.getElementById("errorMsg").innerText = "";
+
+        setTimeout(() => {
+            window.location.href = "/login";
+        }, 1500);
+    } else {
+        document.getElementById("errorMsg").innerText = data.msg;
+        document.getElementById("successMsg").innerText = "";
+    }
+});
+</script>
+
+{% endblock %}
