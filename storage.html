@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Demonstration</title>
+</head>
+<body>
+    <h1>Web Storage Demonstration</h1>
+
+    <h2>Local Storage</h2>
+    <input type="text" id="localStorageInput" placeholder="Enter data for local storage">
+    <button onclick="saveToLocalStorage()">Save to Local Storage</button>
+    <button onclick="retrieveFromLocalStorage()">Retrieve from Local Storage</button>
+    <button onclick="removeFromLocalStorage()">Remove from Local Storage</button>
+    <p>Local Storage Value: <span id="localStorageOutput"></span></p>
+
+    <h2>Session Storage</h2>
+    <input type="text" id="sessionStorageInput" placeholder="Enter data for session storage">
+    <button onclick="saveToSessionStorage()">Save to Session Storage</button>
+    <button onclick="retrieveFromSessionStorage()">Retrieve from Session Storage</button>
+    <button onclick="removeFromSessionStorage()">Remove from Session Storage</button>
+    <p>Session Storage Value: <span id="sessionStorageOutput"></span></p>
+
+    <script>
+        // Local Storage Functions
+        function saveToLocalStorage() {
+            const input = document.getElementById('localStorageInput').value;
+            localStorage.setItem('myLocalData', input);
+            alert('Data saved to local storage!');
+            document.getElementById('localStorageInput').value = ''; // Clear input
+        }
+
+        function retrieveFromLocalStorage() {
+            const data = localStorage.getItem('myLocalData');
+            document.getElementById('localStorageOutput').textContent = data || 'No data found';
+        }
+
+        function removeFromLocalStorage() {
+            localStorage.removeItem('myLocalData');
+            alert('Data removed from local storage!');
+            document.getElementById('localStorageOutput').textContent = '';
+        }
+
+        // Session Storage Functions
+        function saveToSessionStorage() {
+            const input = document.getElementById('sessionStorageInput').value;
+            sessionStorage.setItem('mySessionData', input);
+            alert('Data saved to session storage!');
+            document.getElementById('sessionStorageInput').value = ''; // Clear input
+        }
+
+        function retrieveFromSessionStorage() {
+            const data = sessionStorage.getItem('mySessionData');
+            document.getElementById('sessionStorageOutput').textContent = data || 'No data found';
+        }
+
+        function removeFromSessionStorage() {
+            sessionStorage.removeItem('mySessionData');
+            alert('Data removed from session storage!');
+            document.getElementById('sessionStorageOutput').textContent = '';
+        }
+
+        // Initial retrieval on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            retrieveFromLocalStorage();
+            retrieveFromSessionStorage();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+
+add_ten = lambda x: x + 10
+print(add_ten(5))
+# Output: 15
+
+
+sum_two_numbers = lambda a, b: a + b
+print(sum_two_numbers(5, 6))
+# Output: 11
+
+my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+even_numbers = list(filter(lambda x: x % 2 == 0, my_list))
+print(even_numbers)
+# Output: [2, 4, 6, 8, 10]
+
+my_list = [1, 2, 3, 4, 5]
+doubled_list = list(map(lambda x: x * 2, my_list))
+print(doubled_list)
+# Output: [2, 4, 6, 8, 10]
+
+
+check_parity = lambda x: "Even" if x % 2 == 0 else "Odd"
+print(check_parity(4))
+# Output: Even
+print(check_parity(7))
+# Output: Odd
+
+# map
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x**2, numbers))
+print(squared_numbers) # Output: [1, 4, 9, 16, 25]
+
+# Filter
+ages = [12, 18, 25, 7, 30]
+adult_ages = list(filter(lambda age: age >= 18, ages))
+print(adult_ages) # Output: [18, 25, 30]
+
+# reduce
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+sum_of_numbers = reduce(lambda x, y: x + y, numbers)
+print(sum_of_numbers) # Output: 15
