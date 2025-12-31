@@ -8,3 +8,9 @@ def show_time(request):
     return render(request, 'time.html', {
         'time': current_time
     })
+
+def name_form(request):
+    name = request.GET.get('name')
+    return render(request, 'name.html', {
+        'name': name
+    })
