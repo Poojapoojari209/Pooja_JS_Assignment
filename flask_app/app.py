@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -10,11 +10,18 @@ def home():
 def about():
     return "An About page paragraph should be a concise, engaging summary that tells your brand's story, explains what you do and who you serve, and builds trust with your audience "
 
-@app.route('/add')
-def add():
-    a = int(request.args.get('a'))
-    b = int(request.args.get('b'))
-    return f"Sum is {a + b}"
+@app.route('/calculator', methods=['GET', 'POST'])
+def calculator():
+    result = None
+
+    if request.method == 'POST':
+        num1 = int(request.form['num1'])
+        num2 = int(request.form['num2'])
+        result = num1 + num2
+
+    return render_template('index.html', result=result)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
